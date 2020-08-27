@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Fishing.Areas.Admin.Controllers
 {
+    [Area("Admin")]
     public class UserController : Controller
     {
         private readonly ApplicationDbContext _db;
