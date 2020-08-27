@@ -24,6 +24,16 @@ a {
   border-color: #1861ac;
 }
 
+.TextStyle {
+    color: #c69f4f;
+    font-family: Delius Swash Caps;
+    font-size: 16px;
+    font-style: normal;
+    font-variant: normal;
+    font-weight:700;
+    line-height: 26.4px;
+}
+
 /* Sticky footer styles
 -------------------------------------------------- */
 html {
