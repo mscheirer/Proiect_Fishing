@@ -1,10 +1,21 @@
 ﻿@page
 @model LockoutModel
 @{
-    ViewData["Title"] = "Locked out";
+    ViewData["Title"] = "Lockout";
 }
 
-<header>
-    <h1 class="text-danger">@ViewData["Title"]</h1>
-    <p class="text-danger">This account has been locked out, please try again later.</p>
-</header>
+
+<div class="container-fluid backgroundWhiteBorder">
+    <div class=" d-flex mr-6 justify-content-xl-center">
+        <div class="col-md-7 shadow">
+
+                @{
+                    ViewData["Title"] = "Cont Blocat";
+                }
+            
+            <h3 class="text-info">Acest cont a fost blocat ! Contactati-ne daca solicitati deblocare.</h3>
+        </div>
+    </div>
+</div>
+
+
