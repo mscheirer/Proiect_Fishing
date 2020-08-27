@@ -37,8 +37,8 @@ namespace Fishing.Areas.Identity.Pages.Account
             public string Password { get; set; }
 
             [DataType(DataType.Password)]
-            [Display(Name = "Confirm password")]
-            [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+            [Display(Name = "Confirmare parola")]
+            [Compare("Parola", ErrorMessage = "Parola si parola de confirmare nu sunt identice.")]
             public string ConfirmPassword { get; set; }
 
             public string Code { get; set; }
