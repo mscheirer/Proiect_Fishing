@@ -1,11 +1,11 @@
 ﻿@model Fishing.Models.ViewModels.IndexViewModel
 
-<br />
 
 @if (Model.Coupon.ToList().Count > 0)
 {
-    <div class="border">
-        <div class="carousel" data-ride="carousel" data-interval="2500">
+    <div class="">
+        <div class="carousel" data-ride="carousel" data-interval="4000">
+           
             @for (int i = 0; i < Model.Coupon.Count(); i++)
             {
                 if (i == 0)
@@ -18,7 +18,7 @@
                             var imgsrc = string.Format("data:image/jpg;base64,{0}", base64);
                         }
 
-                        <img src="@imgsrc" height="50px" class="d-block w-100" />
+                        <img src="@imgsrc" height="70px" class="d-block w-100" />
                     </div>
                 }
                 else
@@ -29,15 +29,16 @@
                             var imgsrc = string.Format("data:image/jpg;base64,{0}", base64);
                         }
 
-                        <img src="@imgsrc" height="50px" class="d-block w-100" />
+                        <img src="@imgsrc" height="70px" class="d-block w-100" />
                     </div>
                 }
             }
         </div>
     </div>
-
+    
 }
 
+<br />
 <br />
 <br />
 
