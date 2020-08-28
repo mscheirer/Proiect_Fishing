@@ -12,6 +12,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Http;
+using Fishing.Utility;
 
 namespace Fishing.Controllers
 {
@@ -45,8 +46,8 @@ namespace Fishing.Controllers
 
             if(claim!=null)
             {
-                var cnt = _db.ShoppingCart.Where(u => u.ApplicationUserId == claim.value).ToList().Count;
-                HttpContext.Session.SetInt32("ssCartCount", cnt);
+                var cnt = _db.ShoppingCart.Where(u => u.ApplicationUserId == claim.Value).ToList().Count;
+                HttpContext.Session.SetInt32(SD.ssShoppingCartCount, cnt);
 
             }
 
@@ -97,7 +98,7 @@ namespace Fishing.Controllers
                 await _db.SaveChangesAsync();
 
                 var count = _db.ShoppingCart.Where(c => c.ApplicationUserId == CartObject.ApplicationUserId).ToList().Count();
-                HttpContext.Session.SetInt32("ssCartCount", count);
+                HttpContext.Session.SetInt32(SD.ssShoppingCartCount, count);
 
                 return RedirectToAction("Index");
             }

@@ -14,5 +14,7 @@ namespace Fishing.Utility
         public const string FrontDeskUser = "Casier";
         public const string CustomerEndUser = "Client";
 
+        public const string ssShoppingCartCount = "ssCartCount";
+
     }
 }

@@ -15,6 +15,7 @@ using Fishing.Data;
 using Microsoft.EntityFrameworkCore;
 using Fishing.Models;
 using Microsoft.AspNetCore.Http;
+using Fishing.Utility;
 
 namespace Fishing.Areas.Identity.Pages.Account
 {
@@ -92,7 +93,7 @@ namespace Fishing.Areas.Identity.Pages.Account
 
                     List<ShoppingCart> lstShoppingCart = await _db.ShoppingCart.Where(u => u.ApplicationUserId == user.Id).ToListAsync();
 
-                    HttpContext.Session.SetInt32("ssCartCount", lstShoppingCart.Count);
+                    HttpContext.Session.SetInt32(SD.ssShoppingCartCount, lstShoppingCart.Count);
 
 
                     
