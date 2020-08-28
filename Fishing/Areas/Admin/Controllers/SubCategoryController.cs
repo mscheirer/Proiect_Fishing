@@ -5,12 +5,15 @@ using System.Threading.Tasks;
 using Fishing.Data;
 using Fishing.Models;
 using Fishing.Models.ViewModels;
+using Fishing.Utility;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 
 namespace Fishing.Areas.Admin.Controllers
 {
+    [Authorize(Roles = SD.ManagerUser)]
     [Area("Admin")]
     public class SubCategoryController : Controller
     {

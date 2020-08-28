@@ -4,11 +4,14 @@ using System.Linq;
 using System.Threading.Tasks;
 using Fishing.Data;
 using Fishing.Models;
+using Fishing.Utility;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace Fishing.Areas.Admin
 {
+    [Authorize(Roles = SD.ManagerUser)]
     [Area("Admin")]
     public class CategoryController : Controller
     {

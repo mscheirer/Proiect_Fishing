@@ -5,11 +5,14 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Xml;
 using Fishing.Data;
+using Fishing.Utility;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace Fishing.Areas.Admin.Controllers
 {
+    [Authorize(Roles = SD.ManagerUser)]
     [Area("Admin")]
     public class UserController : Controller
     {
