@@ -37,7 +37,7 @@
                     <img src="~/images/fish_mic15.png" />
                         @*<img src="~/images/spicy.png" />
                         <img src="~/images/verySpicy.png" />*@
-                    <label class="text-info" style="cursor:pointer">FISHING - Rezervare Online</label>
+                    <label class="text-info" style="cursor:pointer">FISHING - Rezervare</label>
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
@@ -99,7 +99,7 @@
                         {
                             <li style="color:white">
                                <a href="#" class="nav-link">
-                                @*<a asp-area="Customer" asp-controller="Cart" asp-action="Index" class="nav-link">*@
+                                <a asp-area="Customer" asp-controller="Cart" asp-action="Index" class="nav-link">
                                     @{
                                         var count = HttpContextAccessor.HttpContext.Session.GetInt32(@SD.ssShoppingCartCount);
                                     }
