@@ -12,6 +12,8 @@ using Fishing.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Fishing.Utility;
+using Stripe;
 
 namespace Fishing
 {
@@ -34,6 +36,9 @@ namespace Fishing
                 .AddDefaultTokenProviders()
                 .AddDefaultUI()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
+
+            services.Configure<StripeSettings>(Configuration.GetSection("Stripe"));
+
 
             //   services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
@@ -67,6 +72,11 @@ namespace Fishing
             app.UseStaticFiles();
 
             app.UseRouting();
+
+           
+            StripeConfiguration.SetApiKey(Configuration.GetSection("Stripe")["SecretKey"]);
+            
+
 
             app.UseSession();
             app.UseAuthentication();

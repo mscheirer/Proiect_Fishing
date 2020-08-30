@@ -16,18 +16,17 @@ namespace Fishing.Utility
         public const string CustomerEndUser = "Client";
 
         public const string ssShoppingCartCount = "ssCartCount";
-
         public const string ssCouponCode = "ssCouponCode";
 
-        public const string StatusSubmitted = "Submitted";
-        public const string StatusInProcess = "Being Prepared";
-        public const string StatusReady = "Ready for Pickup";
-        public const string StatusCompleted = "Completed";
-        public const string StatusCancelled = "Cancelled";
+        public const string StatusSubmitted = "Comanda Plasata";
+        public const string StatusInProcess = "In Procesare";
+        public const string StatusReady = "In Verificare";
+        public const string StatusCompleted = "Efectuat";
+        public const string StatusCancelled = "Anulat";
 
-        public const string PaymentStatusPending = "Pending";
-        public const string PaymentStatusApproved = "Approved";
-        public const string PaymentStatusRejected = "Rejected";
+        public const string PaymentStatusPending = "In asteptare";
+        public const string PaymentStatusApproved = "Aprobat";
+        public const string PaymentStatusRejected = "Respins";
 
 
 

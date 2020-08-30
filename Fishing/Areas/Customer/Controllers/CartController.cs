@@ -137,7 +137,7 @@ namespace Fishing.Areas.Customer.Controllers
             detailCart.OrderHeader.OrderDate = DateTime.Now;
             detailCart.OrderHeader.UserId = claim.Value;
             detailCart.OrderHeader.Status = SD.PaymentStatusPending;
-         detailCart.OrderHeader.PickUpTime = Convert.ToDateTime(detailCart.OrderHeader.PickupDate.ToShortDateString() + " " + detailCart.OrderHeader.PickUpTime.ToShortTimeString());
+            detailCart.OrderHeader.PickUpTime = Convert.ToDateTime(detailCart.OrderHeader.PickupDate.ToShortDateString() + " " + detailCart.OrderHeader.PickUpTime.ToShortTimeString());
 
             List<OrderDetails> orderDetailsList = new List<OrderDetails>();
             _db.OrderHeader.Add(detailCart.OrderHeader);
@@ -182,7 +182,7 @@ namespace Fishing.Areas.Customer.Controllers
             //var options = new ChargeCreateOptions
             //{
             //    Amount = Convert.ToInt32(detailCart.OrderHeader.OrderTotal * 100),
-            //    Currency = "usd",
+            //    Currency = "Lei",
             //    Description = "Order ID : " + detailCart.OrderHeader.Id,
             //    Source = stripeToken
 
@@ -211,6 +211,8 @@ namespace Fishing.Areas.Customer.Controllers
 
             await _db.SaveChangesAsync();
             return RedirectToAction("Index", "Home");
+
+ //     //return RedirectToAction("Confirm","Order", new {id = detail.cart.OrderHeader.Id });
 
         }
 
