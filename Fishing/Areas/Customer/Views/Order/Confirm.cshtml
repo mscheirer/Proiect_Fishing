@@ -1,0 +1,32 @@
+﻿@model Fishing.Models.ViewModels.OrderDetailsViewModel
+@{
+    ViewData["Title"] = "Confirm";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<br />
+<div class="backgroundWhite">
+    <div class="row px-3">
+        <div class="col-8">
+            <h2 class="text-info">Comanda Confirmata</h2>
+        </div>
+        <div class="col-4 text-right">
+            <a asp-action="Index" asp-controller="Home" class="btn btn-success form-control">Comanda Noua</a>
+        </div>
+    </div>
+
+    @if (Model.OrderHeader != null)
+    {
+        <div style="color:maroon" class="p-3">
+            Comanda a fost confirmata ! Detalii despre comanda se regasesc mai jos.
+            <br />
+            Daca sunt intrebari sau neclaritati, nu ezitati sa ne contactati.
+        </div>
+        <partial name="_IndividualOrderDetails" model="Model" />
+    }
+    else
+    {
+        <div class="text-danger">Eroare... Mai incearca.</div>
+    }
+</div>
+
