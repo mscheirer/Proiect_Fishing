@@ -106,7 +106,7 @@
                                         }
                                         <li class="list-group-item d-flex justify-content-between bg-light">
                                             <small class="text-info">Total (Lei)</small>
-                                            <strong class="text-info">Lei: @(Model.OrderHeader.OrderTotal)</strong>
+                                            <strong class="text-info">Ron @(Model.OrderHeader.OrderTotal)</strong>
                                         </li>
                                     </ul>
                                 </div>
@@ -128,8 +128,9 @@
                                         data-description="FIRE ZBUCIUMATE"
                                         data-locale="auto"
                                         data-allow-remember-me="false"
-                                        @*data-image="https://stripe.com/img/documentation/checkout/marketplace.png"></script>*@
-                                              data-image="~"></script>
+                                        data-image="https://stripe.com/img/documentation/checkout/marketplace.png"></script>
+                                <script>data-image="~"></script>
+                                
                                 <script>
                                     document.getElementsByClassName("stripe-button-el")[0].style.display = 'none';
                                 </script>

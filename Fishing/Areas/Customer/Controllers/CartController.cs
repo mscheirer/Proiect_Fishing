@@ -10,11 +10,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity.UI.Services;
-using Fishing.Data;
 using Fishing.Models;
-using Fishing.Models.ViewModels;
-using Fishing.Utility;
-//using Stripe;
+using Stripe;
+
 namespace Fishing.Areas.Customer.Controllers
 {
 
@@ -25,7 +23,7 @@ namespace Fishing.Areas.Customer.Controllers
         private readonly IEmailSender _emailSender;
 
         [BindProperty]
-        public OrderDetailsCart detailCart { get; set; }
+        public OrderDetailsCart DetailCart { get; set; }
 
         public CartController(ApplicationDbContext db, IEmailSender emailSender)
         {
@@ -36,12 +34,12 @@ namespace Fishing.Areas.Customer.Controllers
         public async Task<IActionResult> Index()
         {
 
-            detailCart = new OrderDetailsCart()
+            DetailCart = new OrderDetailsCart()
             {
                 OrderHeader = new Models.OrderHeader()
             };
 
-            detailCart.OrderHeader.OrderTotal = 0;
+            DetailCart.OrderHeader.OrderTotal = 0;
 
             var claimsIdentity = (ClaimsIdentity)User.Identity;
             var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
@@ -49,30 +47,30 @@ namespace Fishing.Areas.Customer.Controllers
             var cart = _db.ShoppingCart.Where(c => c.ApplicationUserId == claim.Value);
             if (cart != null)
             {
-                detailCart.listCart = cart.ToList();
+                DetailCart.listCart = cart.ToList();
             }
 
-            foreach (var list in detailCart.listCart)
+            foreach (var list in DetailCart.listCart)
             {
                 list.MenuItem = await _db.MenuItem.FirstOrDefaultAsync(m => m.Id == list.MenuItemId);
-                detailCart.OrderHeader.OrderTotal = detailCart.OrderHeader.OrderTotal + (list.MenuItem.Price * list.Count);
+                DetailCart.OrderHeader.OrderTotal = DetailCart.OrderHeader.OrderTotal + (list.MenuItem.Price * list.Count);
                 list.MenuItem.Description = SD.ConvertToRawHtml(list.MenuItem.Description);
                 if (list.MenuItem.Description.Length > 100)
                 {
                     list.MenuItem.Description = list.MenuItem.Description.Substring(0, 99) + "...";
                 }
             }
-            detailCart.OrderHeader.OrderTotalOriginal = detailCart.OrderHeader.OrderTotal;
+            DetailCart.OrderHeader.OrderTotalOriginal = DetailCart.OrderHeader.OrderTotal;
 
             if (HttpContext.Session.GetString(SD.ssCouponCode) != null)
             {
-                detailCart.OrderHeader.CouponCode = HttpContext.Session.GetString(SD.ssCouponCode);
-                var couponFromDb = await _db.Coupon.Where(c => c.Name.ToLower() == detailCart.OrderHeader.CouponCode.ToLower()).FirstOrDefaultAsync();
-                detailCart.OrderHeader.OrderTotal = SD.DiscountedPrice(couponFromDb, detailCart.OrderHeader.OrderTotalOriginal);
+                DetailCart.OrderHeader.CouponCode = HttpContext.Session.GetString(SD.ssCouponCode);
+                var couponFromDb = await _db.Coupon.Where(c => c.Name.ToLower() == DetailCart.OrderHeader.CouponCode.ToLower()).FirstOrDefaultAsync();
+                DetailCart.OrderHeader.OrderTotal = SD.DiscountedPrice(couponFromDb, DetailCart.OrderHeader.OrderTotalOriginal);
             }
 
 
-            return View(detailCart);
+            return View(DetailCart);
 
         }
 
@@ -80,12 +78,12 @@ namespace Fishing.Areas.Customer.Controllers
         public async Task<IActionResult> Summary()
         {
 
-            detailCart = new OrderDetailsCart()
+            DetailCart = new OrderDetailsCart()
             {
                 OrderHeader = new Models.OrderHeader()
             };
 
-            detailCart.OrderHeader.OrderTotal = 0;
+            DetailCart.OrderHeader.OrderTotal = 0;
 
             var claimsIdentity = (ClaimsIdentity)User.Identity;
             var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
@@ -93,30 +91,30 @@ namespace Fishing.Areas.Customer.Controllers
             var cart = _db.ShoppingCart.Where(c => c.ApplicationUserId == claim.Value);
             if (cart != null)
             {
-                detailCart.listCart = cart.ToList();
+                DetailCart.listCart = cart.ToList();
             }
 
-            foreach (var list in detailCart.listCart)
+            foreach (var list in DetailCart.listCart)
             {
                 list.MenuItem = await _db.MenuItem.FirstOrDefaultAsync(m => m.Id == list.MenuItemId);
-                detailCart.OrderHeader.OrderTotal = detailCart.OrderHeader.OrderTotal + (list.MenuItem.Price * list.Count);
+                DetailCart.OrderHeader.OrderTotal = DetailCart.OrderHeader.OrderTotal + (list.MenuItem.Price * list.Count);
 
             }
-            detailCart.OrderHeader.OrderTotalOriginal = detailCart.OrderHeader.OrderTotal;
-            detailCart.OrderHeader.PickupName = applicationUser.Name;
-            detailCart.OrderHeader.PhoneNumber = applicationUser.PhoneNumber;
-            detailCart.OrderHeader.PickUpTime = DateTime.Now;
+            DetailCart.OrderHeader.OrderTotalOriginal = DetailCart.OrderHeader.OrderTotal;
+            DetailCart.OrderHeader.PickupName = applicationUser.Name;
+            DetailCart.OrderHeader.PhoneNumber = applicationUser.PhoneNumber;
+            DetailCart.OrderHeader.PickUpTime = DateTime.Now;
 
 
             if (HttpContext.Session.GetString(SD.ssCouponCode) != null)
             {
-                detailCart.OrderHeader.CouponCode = HttpContext.Session.GetString(SD.ssCouponCode);
-                var couponFromDb = await _db.Coupon.Where(c => c.Name.ToLower() == detailCart.OrderHeader.CouponCode.ToLower()).FirstOrDefaultAsync();
-                detailCart.OrderHeader.OrderTotal = SD.DiscountedPrice(couponFromDb, detailCart.OrderHeader.OrderTotalOriginal);
+                DetailCart.OrderHeader.CouponCode = HttpContext.Session.GetString(SD.ssCouponCode);
+                var couponFromDb = await _db.Coupon.Where(c => c.Name.ToLower() == DetailCart.OrderHeader.CouponCode.ToLower()).FirstOrDefaultAsync();
+                DetailCart.OrderHeader.OrderTotal = SD.DiscountedPrice(couponFromDb, DetailCart.OrderHeader.OrderTotalOriginal);
             }
 
 
-            return View(detailCart);
+            return View(DetailCart);
        }
 
 
@@ -127,87 +125,89 @@ namespace Fishing.Areas.Customer.Controllers
         [ActionName("Summary")]
         public async Task<IActionResult> SummaryPost(string stripeToken)
         {
-            var claimsIdentity = (ClaimsIdentity)User.Identity;
+            var claimsIdentity = (ClaimsIdentity)User.Identity; 
             var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
 
 
-            detailCart.listCart = await _db.ShoppingCart.Where(c => c.ApplicationUserId == claim.Value).ToListAsync();
+            DetailCart.listCart = await _db.ShoppingCart.Where(c => c.ApplicationUserId == claim.Value).ToListAsync();
 
-            detailCart.OrderHeader.PaymentStatus = SD.PaymentStatusPending;
-            detailCart.OrderHeader.OrderDate = DateTime.Now;
-            detailCart.OrderHeader.UserId = claim.Value;
-            detailCart.OrderHeader.Status = SD.PaymentStatusPending;
-            detailCart.OrderHeader.PickUpTime = Convert.ToDateTime(detailCart.OrderHeader.PickupDate.ToShortDateString() + " " + detailCart.OrderHeader.PickUpTime.ToShortTimeString());
+            DetailCart.OrderHeader.PaymentStatus = SD.PaymentStatusPending;
+            DetailCart.OrderHeader.OrderDate = DateTime.Now;
+            DetailCart.OrderHeader.UserId = claim.Value;
+            DetailCart.OrderHeader.Status = SD.PaymentStatusPending;
+            DetailCart.OrderHeader.PickUpTime = Convert.ToDateTime(DetailCart.OrderHeader.PickupDate.ToShortDateString() + " " + DetailCart.OrderHeader.PickUpTime.ToShortTimeString());
 
             List<OrderDetails> orderDetailsList = new List<OrderDetails>();
-            _db.OrderHeader.Add(detailCart.OrderHeader);
+            _db.OrderHeader.Add(DetailCart.OrderHeader);
             await _db.SaveChangesAsync();
 
-            detailCart.OrderHeader.OrderTotalOriginal = 0;
+            DetailCart.OrderHeader.OrderTotalOriginal = 0;
 
 
-            foreach (var item in detailCart.listCart)
+            foreach (var item in DetailCart.listCart)
             {
                 item.MenuItem = await _db.MenuItem.FirstOrDefaultAsync(m => m.Id == item.MenuItemId);
                 OrderDetails orderDetails = new OrderDetails
                 {
                     MenuItemId = item.MenuItemId,
-                    OrderId = detailCart.OrderHeader.Id,
+                    OrderId = DetailCart.OrderHeader.Id,
                     Description = item.MenuItem.Description,
                     Name = item.MenuItem.Name,
                     Price = item.MenuItem.Price,
                     Count = item.Count
                 };
-                detailCart.OrderHeader.OrderTotalOriginal += orderDetails.Count * orderDetails.Price;
+                DetailCart.OrderHeader.OrderTotalOriginal += orderDetails.Count * orderDetails.Price;
                 _db.OrderDetails.Add(orderDetails);
 
             }
 
             if (HttpContext.Session.GetString(SD.ssCouponCode) != null)
             {
-                detailCart.OrderHeader.CouponCode = HttpContext.Session.GetString(SD.ssCouponCode);
-                var couponFromDb = await _db.Coupon.Where(c => c.Name.ToLower() == detailCart.OrderHeader.CouponCode.ToLower()).FirstOrDefaultAsync();
-                detailCart.OrderHeader.OrderTotal = SD.DiscountedPrice(couponFromDb, detailCart.OrderHeader.OrderTotalOriginal);
+                DetailCart.OrderHeader.CouponCode = HttpContext.Session.GetString(SD.ssCouponCode);
+                var couponFromDb = await _db.Coupon.Where(c => c.Name.ToLower() == DetailCart.OrderHeader.CouponCode.ToLower()).FirstOrDefaultAsync();
+                DetailCart.OrderHeader.OrderTotal = SD.DiscountedPrice(couponFromDb, DetailCart.OrderHeader.OrderTotalOriginal);
             }
             else
             {
-                detailCart.OrderHeader.OrderTotal = detailCart.OrderHeader.OrderTotalOriginal;
+                DetailCart.OrderHeader.OrderTotal = DetailCart.OrderHeader.OrderTotalOriginal;
             }
-            detailCart.OrderHeader.CouponCodeDiscount = detailCart.OrderHeader.OrderTotalOriginal - detailCart.OrderHeader.OrderTotal;
+            DetailCart.OrderHeader.CouponCodeDiscount = DetailCart.OrderHeader.OrderTotalOriginal - DetailCart.OrderHeader.OrderTotal;
 
-            _db.ShoppingCart.RemoveRange(detailCart.listCart);
+            _db.ShoppingCart.RemoveRange(DetailCart.listCart);
             HttpContext.Session.SetInt32(SD.ssShoppingCartCount, 0);
             await _db.SaveChangesAsync();
 
-            //var options = new ChargeCreateOptions
-            //{
-            //    Amount = Convert.ToInt32(detailCart.OrderHeader.OrderTotal * 100),
-            //    Currency = "Lei",
-            //    Description = "Order ID : " + detailCart.OrderHeader.Id,
-            //    Source = stripeToken
+            // tranzactia catre Stripe
 
-            //};
-            //var service = new ChargeService();
-            //Charge charge = service.Create(options);
+            var options = new ChargeCreateOptions
+            {
+                Amount = Convert.ToInt32(DetailCart.OrderHeader.OrderTotal * 100),
+                Currency = "ron",
+                Description = "Order ID : " + DetailCart.OrderHeader.Id,
+                SourceId = stripeToken
 
-            //if (charge.BalanceTransactionId == null)
-            //{
-            //    detailCart.OrderHeader.PaymentStatus = SD.PaymentStatusRejected;
-            //}
-            //else
-            //{
-            //    detailCart.OrderHeader.TransactionId = charge.BalanceTransactionId;
-            //}
+            };
+            var service = new ChargeService();
+            Charge charge = service.Create(options);
 
-            //if (charge.Status.ToLower() == "succeeded")
-            //{
-            //    detailCart.OrderHeader.PaymentStatus = SD.PaymentStatusApproved;
-            //    detailCart.OrderHeader.Status = SD.StatusSubmitted;
-            //}
-            //else
-            //{
-            //    detailCart.OrderHeader.PaymentStatus = SD.PaymentStatusRejected;
-            //}
+            if (charge.BalanceTransactionId == null)
+            {
+                DetailCart.OrderHeader.PaymentStatus = SD.PaymentStatusRejected;
+            }
+            else
+            {
+                DetailCart.OrderHeader.TransactionId = charge.BalanceTransactionId;
+            }
+
+            if (charge.Status.ToLower() == "succeeded")
+            {
+                DetailCart.OrderHeader.PaymentStatus = SD.PaymentStatusApproved;
+                DetailCart.OrderHeader.Status = SD.StatusSubmitted;
+            }
+            else
+            {
+                DetailCart.OrderHeader.PaymentStatus = SD.PaymentStatusRejected;
+            }
 
             await _db.SaveChangesAsync();
             return RedirectToAction("Index", "Home");
@@ -221,11 +221,11 @@ namespace Fishing.Areas.Customer.Controllers
 
         public IActionResult AddCoupon()
         {
-            if (detailCart.OrderHeader.CouponCode == null)
+            if (DetailCart.OrderHeader.CouponCode == null)
             {
-                detailCart.OrderHeader.CouponCode = "";
+                DetailCart.OrderHeader.CouponCode = "";
             }
-            HttpContext.Session.SetString(SD.ssCouponCode, detailCart.OrderHeader.CouponCode);
+            HttpContext.Session.SetString(SD.ssCouponCode, DetailCart.OrderHeader.CouponCode);
 
             return RedirectToAction(nameof(Index));
         }
