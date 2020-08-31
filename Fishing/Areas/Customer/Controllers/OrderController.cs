@@ -279,18 +279,18 @@ namespace Fishing.Areas.Customer.Controllers
             return View(orderListVM);
         }
 
-     //   [Authorize(Roles = SD.ManagerUser)]
-     //   [HttpPost]
-     //   [ActionName("OrderPickup")]
-     //   public async Task<IActionResult> OrderPickupPost(int orderId)
-     //   {
-     //       OrderHeader orderHeader = await _db.OrderHeader.FindAsync(orderId);
-     //       orderHeader.Status = SD.StatusCompleted;
-     //       await _db.SaveChangesAsync();
-     ////       await _emailSender.SendEmailAsync(_db.Users.Where(u => u.Id == orderHeader.UserId).FirstOrDefault().Email, "Spice - Order Completed " + orderHeader.Id.ToString(), "Order has been completed successfully.");
+        [Authorize(Roles = SD.FrontDeskUser + "," + SD.ManagerUser)]
+        [HttpPost]
+        [ActionName("OrderPickup")]
+        public async Task<IActionResult> OrderPickupPost(int orderId)
+        {
+            OrderHeader orderHeader = await _db.OrderHeader.FindAsync(orderId);
+            orderHeader.Status = SD.StatusCompleted;
+            await _db.SaveChangesAsync();
+            //       await _emailSender.SendEmailAsync(_db.Users.Where(u => u.Id == orderHeader.UserId).FirstOrDefault().Email, "Spice - Order Completed " + orderHeader.Id.ToString(), "Order has been completed successfully.");
 
-     //       return RedirectToAction("OrderPickup", "Order");
-     //   }
+            return RedirectToAction("OrderPickup", "Order");
+        }
     }
 }
 

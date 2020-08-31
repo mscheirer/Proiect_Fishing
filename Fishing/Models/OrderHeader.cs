@@ -25,19 +25,19 @@ namespace Fishing.Models
         public double   OrderTotalOriginal { get; set; }
 
         [Required]
-        [DisplayFormat(DataFormatString = "{0:C}")]
-        [Display(Name ="Order Total")]
+        [DisplayFormat(DataFormatString = "{0} Lei")]
+        [Display(Name ="Total")]
         public double OrderTotal { get; set; }
 
         [Required]
-        [Display(Name = "Pickup Time")]
+        [Display(Name = "Data Rezervare")]
         public DateTime PickUpTime { get; set; }
 
         [Required]
         [NotMapped]
         public DateTime PickUpDate { get; set; }
 
-       [Display(Name ="Coupon Code")]
+       [Display(Name ="Cod Reducere")]
         public string CouponCode { get; set; }
         public double CouponCodeDiscount { get; set; }
         public string Status { get; set; }
@@ -45,10 +45,10 @@ namespace Fishing.Models
         public string Comments { get; set; }
 
 
-        [Display(Name = "Pickup Name")]
+        [Display(Name = "Beneficiar")]
         public string PickupName { get; set; }
 
-        [Display(Name = "Phone Number")]
+        [Display(Name = "Telefon")]
         public string PhoneNumber { get; set; }
 
         public string TransactionId { get; set; }
