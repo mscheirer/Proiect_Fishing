@@ -9,7 +9,7 @@
 <div class="border backgroundWhite">
     <div class="row">
         <div class="col-6">
-            <h2 class="text-info"> Past Order List</h2>
+            <h2 class="text-info"> Rezervari anterioare </h2>
         </div>
         <div class="col-6 text-right">
             <partial name="_CreateButtonPartial" />
@@ -37,7 +37,7 @@
                         @Html.DisplayNameFor(m => m.Orders[0].OrderHeader.OrderTotal)
                     </th>
                     <th>
-                        Total Items
+                        Total Articole
                     </th>
                     <th></th>
 
@@ -65,12 +65,12 @@
                         </td>
                         <td>
                             <button type="submit" class="btn btn-success anchorDetail" data-id="@item.OrderHeader.Id" data-toggle="modal">
-                                <i class="far fa-list-alt"></i> Details
+                                <i class="far fa-list-alt"></i> Detalii
                             </button>
                             @if (item.OrderHeader.Status == SD.StatusSubmitted || item.OrderHeader.Status == SD.StatusInProcess || item.OrderHeader.Status == SD.StatusCompleted || item.OrderHeader.Status == SD.StatusReady)
                             {
                                 <button type="button" class="btn btn-info btnOrderStatus" data-id="@item.OrderHeader.Id" data-toggle="modal">
-                                    <i class="far fa-clock"></i> Status
+                                    <i class="far fa-clock"></i> Status Rezervare
                                 </button>
                             }
                         </td>
@@ -85,7 +85,7 @@
         }
         else
         {
-            <p>No category exists...</p>
+            <p>Nu exista Categorie...</p>
         }
     </div>
 </div>
@@ -94,13 +94,13 @@
     <div class="modal-dialog-centered modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header bg-success text-light justify-content-center">
-                <h5 class="modal-title">Order Details</h5>
+                <h5 class="modal-title">Detalii Rezervare</h5>
             </div>
             <div class="modal-body justify-content-center" id="myModalContent">
 
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" style="width:20%" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-secondary" style="width:20%" data-dismiss="modal">Inchide</button>
             </div>
         </div>
     </div>
@@ -109,12 +109,12 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header bg-info text-light justify-content-center">
-                <h5 class="modal-title">Order Status </h5>
+                <h5 class="modal-title">Status Rezervare </h5>
             </div>
             <div class="modal-body justify-content-center" id='myOrderStatusContent'>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" style="width:20%" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-secondary" style="width:20%" data-dismiss="modal">Inchide</button>
             </div>
         </div>
     </div>
@@ -145,7 +145,7 @@
                         $('#myModal').modal('show');
                     },
                     error: function () {
-                        alert("Dynamic content load failed");
+                        alert("Incarcarea continutului dinamic a esuat.");
                     }
                 });
 
@@ -167,7 +167,7 @@
 
                     },
                     error: function () {
-                        alert("Dynamic content load failed.");
+                        alert("Incarcarea continutului dinamic a esuat.");
                     }
                 });
             });

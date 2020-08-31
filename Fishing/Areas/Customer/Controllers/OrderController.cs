@@ -13,7 +13,7 @@ using Fishing.Models;
 using Fishing.Models.ViewModels;
 using Fishing.Utility;
 
-namespace Spice.Areas.Customer.Controllers
+namespace Fishing.Areas.Customer.Controllers
 {
     [Area("Customer")]
     public class OrderController : Controller
@@ -178,8 +178,11 @@ namespace Spice.Areas.Customer.Controllers
 
 
 
+
+
+
         [Authorize]
-        public async Task<IActionResult> OrderPickup(int productPage = 1, string searchEmail = null, string searchPhone = null, string searchName = null)
+        public async Task<IActionResult> OrderPickup(int productPage = 1, string searchEmail = null, string searchTelefon = null, string searchNume = null)
         {
             //var claimsIdentity = (ClaimsIdentity)User.Identity;
             //var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
@@ -191,31 +194,36 @@ namespace Spice.Areas.Customer.Controllers
 
             StringBuilder param = new StringBuilder();
             param.Append("/Customer/Order/OrderPickup?productPage=:");
-            param.Append("&searchName=");
-            if (searchName != null)
+
+            param.Append("&searchNume=");
+            if (searchNume != null)
             {
-                param.Append(searchName);
+                param.Append(searchNume);
             }
             param.Append("&searchEmail=");
             if (searchEmail != null)
             {
                 param.Append(searchEmail);
             }
-            param.Append("&searchPhone=");
-            if (searchPhone != null)
+            param.Append("&searchTelefon=");
+            if (searchTelefon != null)
             {
-                param.Append(searchPhone);
+                param.Append(searchTelefon);
             }
 
-            List<OrderHeader> OrderHeaderList = new List<OrderHeader>();
-            if (searchName != null || searchEmail != null || searchPhone != null)
-            {
-                var user = new ApplicationUser();
 
-                if (searchName != null)
+            List<OrderHeader> OrderHeaderList = new List<OrderHeader>();
+
+            if (searchNume != null || searchEmail != null || searchTelefon != null)
+            {
+
+                var user = new ApplicationUser();
+                
+
+                if (searchNume != null)
                 {
                     OrderHeaderList = await _db.OrderHeader.Include(o => o.ApplicationUser)
-                                                .Where(u => u.PickupName.ToLower().Contains(searchName.ToLower()))
+                                                .Where(u => u.PickupName.ToLower().Contains(searchNume.ToLower()))
                                                 .OrderByDescending(o => o.OrderDate).ToListAsync();
                 }
                 else
@@ -229,10 +237,10 @@ namespace Spice.Areas.Customer.Controllers
                     }
                     else
                     {
-                        if (searchPhone != null)
+                        if (searchTelefon != null)
                         {
                             OrderHeaderList = await _db.OrderHeader.Include(o => o.ApplicationUser)
-                                                        .Where(u => u.PhoneNumber.Contains(searchPhone))
+                                                        .Where(u => u.PhoneNumber.Contains(searchTelefon))
                                                         .OrderByDescending(o => o.OrderDate).ToListAsync();
                         }
                     }
@@ -271,18 +279,18 @@ namespace Spice.Areas.Customer.Controllers
             return View(orderListVM);
         }
 
-        [Authorize(Roles = SD.ManagerUser)]
-        [HttpPost]
-        [ActionName("OrderPickup")]
-        public async Task<IActionResult> OrderPickupPost(int orderId)
-        {
-            OrderHeader orderHeader = await _db.OrderHeader.FindAsync(orderId);
-            orderHeader.Status = SD.StatusCompleted;
-            await _db.SaveChangesAsync();
-     //       await _emailSender.SendEmailAsync(_db.Users.Where(u => u.Id == orderHeader.UserId).FirstOrDefault().Email, "Spice - Order Completed " + orderHeader.Id.ToString(), "Order has been completed successfully.");
+     //   [Authorize(Roles = SD.ManagerUser)]
+     //   [HttpPost]
+     //   [ActionName("OrderPickup")]
+     //   public async Task<IActionResult> OrderPickupPost(int orderId)
+     //   {
+     //       OrderHeader orderHeader = await _db.OrderHeader.FindAsync(orderId);
+     //       orderHeader.Status = SD.StatusCompleted;
+     //       await _db.SaveChangesAsync();
+     ////       await _emailSender.SendEmailAsync(_db.Users.Where(u => u.Id == orderHeader.UserId).FirstOrDefault().Email, "Spice - Order Completed " + orderHeader.Id.ToString(), "Order has been completed successfully.");
 
-            return RedirectToAction("OrderPickup", "Order");
-        }
+     //       return RedirectToAction("OrderPickup", "Order");
+     //   }
     }
 }
 

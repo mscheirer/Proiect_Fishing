@@ -6,20 +6,20 @@
 }
 
 
-<form method="get">
+<form method="post">
 
     <br /><br />
-    <h2 class="text-info"> Orders Ready for Pickup : </h2>
+    <h2 class="text-info"> Rezervari Verificate : </h2>
     <div class="border backgroundWhite">
         <div class="container border border-secondary" style="height:60px;">
             <div class="row container">
                 <div class="col-11">
                     <div class="row" style="padding-top:10px">
                         <div class="col-4">
-                            @Html.Editor("searchName", new { htmlAttributes = new { @class = "form-control", @placeholder = "Name..." } })
+                            @Html.Editor("searchNume", new { htmlAttributes = new { @class = "form-control", @placeholder = "Nume..." } })
                         </div>
                         <div class="col-4">
-                            @Html.Editor("searchPhone", new { htmlAttributes = new { @class = "form-control", @placeholder = "Phone..." } })
+                            @Html.Editor("searchTelefon", new { htmlAttributes = new { @class = "form-control", @placeholder = "Telefon..." } })
                         </div>
                         <div class="col-4">
                             @Html.Editor("searchEmail", new { htmlAttributes = new { @class = "form-control", @placeholder = "Email..." } })
@@ -28,7 +28,7 @@
                 </div>
                 <div class="col-1">
                     <div class="row" style="padding-top:10px;">
-                        <button type="submit" name="submit" value="Search" class="btn btn-info form-control">
+                        <button type="submit" name="submit" value="Cautare" class="btn btn-info form-control">
                             <i class="fas fa-search"></i>
                         </button>
                     </div>
