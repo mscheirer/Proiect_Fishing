@@ -11,4 +11,3 @@ namespace Fishing.Models.ViewModels
         public PagingInfo PagingInfo { get; set; }
     }
 }
-

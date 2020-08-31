@@ -5,12 +5,11 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<br />
-<br />
+<br /><br />
 <div class="border backgroundWhite">
     <div class="row">
         <div class="col-6">
-            <h2 class="text-info"> Lista Comenzi Vechi</h2>
+            <h2 class="text-info"> Past Order List</h2>
         </div>
         <div class="col-6 text-right">
             <partial name="_CreateButtonPartial" />
@@ -38,7 +37,7 @@
                         @Html.DisplayNameFor(m => m.Orders[0].OrderHeader.OrderTotal)
                     </th>
                     <th>
-                        Total Articole
+                        Total Items
                     </th>
                     <th></th>
 
@@ -66,12 +65,12 @@
                         </td>
                         <td>
                             <button type="submit" class="btn btn-success anchorDetail" data-id="@item.OrderHeader.Id" data-toggle="modal">
-                                <i class="far fa-list-alt"></i> Detalii
+                                <i class="far fa-list-alt"></i> Details
                             </button>
                             @if (item.OrderHeader.Status == SD.StatusSubmitted || item.OrderHeader.Status == SD.StatusInProcess || item.OrderHeader.Status == SD.StatusCompleted || item.OrderHeader.Status == SD.StatusReady)
                             {
                                 <button type="button" class="btn btn-info btnOrderStatus" data-id="@item.OrderHeader.Id" data-toggle="modal">
-                                    <i class="far fa-clock"></i> Status 
+                                    <i class="far fa-clock"></i> Status
                                 </button>
                             }
                         </td>
@@ -86,7 +85,7 @@
         }
         else
         {
-            <p>Nu exista categorie...</p>
+            <p>No category exists...</p>
         }
     </div>
 </div>
@@ -95,7 +94,7 @@
     <div class="modal-dialog-centered modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header bg-success text-light justify-content-center">
-                <h5 class="modal-title"> Detalii Comanda</h5>
+                <h5 class="modal-title">Order Details</h5>
             </div>
             <div class="modal-body justify-content-center" id="myModalContent">
 
@@ -106,18 +105,16 @@
         </div>
     </div>
 </div>
-
-
 <div class="modal fade" id="myOrderStatus" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header bg-info text-light justify-content-center">
-                <h5 class="modal-title">Detalii Comanda </h5>
+                <h5 class="modal-title">Order Status </h5>
             </div>
             <div class="modal-body justify-content-center" id='myOrderStatusContent'>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" style="width:20%" data-dismiss="modal">Inchide</button>
+                <button type="button" class="btn btn-secondary" style="width:20%" data-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
@@ -126,7 +123,8 @@
 
 @section scripts
     {
-    <script>var PostBackURL = '/Customer/Order/GetOrderDetails';
+    <script>
+        var PostBackURL = '/Customer/Order/GetOrderDetails';
         var OrderStatusURL = '/Customer/Order/GetOrderStatus';
 
         $(function () {
@@ -173,5 +171,6 @@
                     }
                 });
             });
-        });</script>
+        });
+    </script>
 }

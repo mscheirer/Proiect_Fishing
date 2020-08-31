@@ -1,17 +1,17 @@
-﻿using Fishing.Models;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Razor.TagHelpers;
+using Fishing.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Fishing.TagHelpers
+namespace Spice.TagHelpers
 {
-    [HtmlTargetElement("div", Attributes = "page-model")]
+    [HtmlTargetElement("div", Attributes ="page-model")]
     public class PageLinkTagHelper : TagHelper
     {
         private IUrlHelperFactory urlHelperFactory;
@@ -37,12 +37,12 @@ namespace Fishing.TagHelpers
             IUrlHelper urlHelper = urlHelperFactory.GetUrlHelper(ViewContext);
             TagBuilder result = new TagBuilder("div");
 
-            for (int i = 1; i <= PageModel.TotalPage; i++)
+            for(int i=1;i<=PageModel.totalPage;i++)
             {
                 TagBuilder tag = new TagBuilder("a");
-                string url = PageModel.UrlParam.Replace(":", i.ToString());
+                string url = PageModel.urlParam.Replace(":", i.ToString());
                 tag.Attributes["href"] = url;
-                if (PageClassesEnabled)
+                if(PageClassesEnabled)
                 {
                     tag.AddCssClass(PageClass);
                     tag.AddCssClass(i == PageModel.CurrentPage ? PageClassSelected : PageClassNormal);

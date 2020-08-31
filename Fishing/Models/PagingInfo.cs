@@ -13,8 +13,8 @@ namespace Fishing.Models
 
         public int CurrentPage { get; set; }
 
-        public int TotalPage => (int)Math.Ceiling((decimal)TotalItem / ItemsPerPage);
+        public int totalPage => (int)Math.Ceiling((decimal)TotalItem / ItemsPerPage);
 
-        public string UrlParam { get; set; }
+        public string urlParam { get; set; }
     }
 }

@@ -11,8 +11,8 @@ namespace Fishing.Utility
         public const string DefaultFishImage = "default_fisherman.jpg";
 
         public const string ManagerUser = "Manager";
-        public const string KitchenUser = "Sef";
-        public const string FrontDeskUser = "Casier";
+        public const string KitchenUser = "Sef Kitchen";
+        public const string FrontDeskUser = "Casier Front";
         public const string CustomerEndUser = "Client";
 
         public const string ssShoppingCartCount = "ssCartCount";

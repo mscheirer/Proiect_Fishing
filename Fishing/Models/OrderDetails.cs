@@ -14,7 +14,7 @@ namespace Fishing.Models
 
         [Required]
         public int OrderId { get; set; }
-        
+
         [ForeignKey("OrderId")]
         public virtual OrderHeader OrderHeader { get; set; }
 
@@ -25,16 +25,12 @@ namespace Fishing.Models
         public virtual MenuItem MenuItem { get; set; }
 
         public int Count { get; set; }
+
         public string Name { get; set; }
         public string Description { get; set; }
 
         [Required]
         public double Price { get; set; }
-
-
-
-
-
 
     }
 }

@@ -1,0 +1,20 @@
+﻿@model string
+@using Fishing.Utility
+<div style="width:100%">
+    @if (Model == SD.StatusSubmitted)
+    {
+        <img src="~/images/OrderPlaced_mk.png" width="100%" />
+    }
+    @if (Model == SD.StatusInProcess)
+    {
+        <img src="~/images/InKitchen_mk.png" width="100%" />
+    }
+    @if (Model == SD.StatusReady)
+    {
+        <img src="~/images/ReadyForPickup_mk.png" width="100%" />
+    }
+    @if (Model == SD.StatusCompleted)
+    {
+        <img src="~/images/completed_mk.png" width="100%" />
+    }
+</div>

@@ -2,36 +2,30 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
+using Microsoft.EntityFrameworkCore;
+using Fishing.Data;
 using Fishing.Models;
 using Fishing.Models.ViewModels;
-using Fishing.Data;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Authorization;
-using System.Security.Claims;
-using Microsoft.AspNetCore.Http;
 using Fishing.Utility;
 
 namespace Fishing.Controllers
 {
     [Area("Customer")]
-
     public class HomeController : Controller
     {
-        //private readonly ILogger<HomeController> _logger;
-
-        //public HomeController(ILogger<HomeController> logger)
-        //{
-        //    _logger = logger;
-        //}
-
         private readonly ApplicationDbContext _db;
+
         public HomeController(ApplicationDbContext db)
         {
             _db = db;
         }
+
+
         public async Task<IActionResult> Index()
         {
             IndexViewModel IndexVM = new IndexViewModel()
@@ -39,6 +33,7 @@ namespace Fishing.Controllers
                 MenuItem = await _db.MenuItem.Include(m => m.Category).Include(m => m.SubCategory).ToListAsync(),
                 Category = await _db.Category.ToListAsync(),
                 Coupon = await _db.Coupon.Where(c => c.IsActive == true).ToListAsync()
+
             };
 
             var claimsIdentity = (ClaimsIdentity)User.Identity;
@@ -48,7 +43,6 @@ namespace Fishing.Controllers
             {
                 var cnt = _db.ShoppingCart.Where(u => u.ApplicationUserId == claim.Value).ToList().Count;
                 HttpContext.Session.SetInt32(SD.ssShoppingCartCount, cnt);
-
             }
 
 
@@ -59,18 +53,16 @@ namespace Fishing.Controllers
         public async Task<IActionResult> Details(int id)
         {
             var menuItemFromDb = await _db.MenuItem.Include(m => m.Category).Include(m => m.SubCategory).Where(m => m.Id == id).FirstOrDefaultAsync();
-                
-                ShoppingCart cartObj = new ShoppingCart()
-                {
-                    MenuItem = menuItemFromDb,
-                    MenuItemId = menuItemFromDb.Id
 
-                };
+            ShoppingCart cartObj = new ShoppingCart()
+            {
+                MenuItem = menuItemFromDb,
+                MenuItemId = menuItemFromDb.Id
+            };
+
             return View(cartObj);
         }
 
-
-        // post action method for details
 
         [Authorize]
         [HttpPost]
@@ -111,13 +103,11 @@ namespace Fishing.Controllers
                 {
                     MenuItem = menuItemFromDb,
                     MenuItemId = menuItemFromDb.Id
-
                 };
 
                 return View(cartObj);
             }
         }
-
 
 
 

@@ -22,11 +22,11 @@ namespace Fishing.Models
         public DateTime OrderDate { get; set; }
 
         [Required]
-        public double OrderTotalOriginal { get; set; }
+        public double   OrderTotalOriginal { get; set; }
 
         [Required]
         [DisplayFormat(DataFormatString = "{0:C}")]
-        [Display(Name = "Order Total")]
+        [Display(Name ="Order Total")]
         public double OrderTotal { get; set; }
 
         [Required]
@@ -34,16 +34,15 @@ namespace Fishing.Models
         public DateTime PickUpTime { get; set; }
 
         [Required]
-        //   [NotMapped]
-        public DateTime PickupDate { get; set; }
+        [NotMapped]
+        public DateTime PickUpDate { get; set; }
 
-        [Display(Name = "Coupon Code")]
+       [Display(Name ="Coupon Code")]
         public string CouponCode { get; set; }
         public double CouponCodeDiscount { get; set; }
         public string Status { get; set; }
         public string PaymentStatus { get; set; }
         public string Comments { get; set; }
-
 
 
         [Display(Name = "Pickup Name")]
