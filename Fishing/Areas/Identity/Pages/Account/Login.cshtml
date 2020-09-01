@@ -11,29 +11,30 @@
         <div class="row d-flex justify-content-lg-end mr-4 " >
             <div class="col-md-8 mt-3">
                 <img src="~/images/fish_front.png" alt="logo" />
+                
             </div>
             <div class="col-md-3  shadow" >
                 <section class="mt-3">
                     <h3>@ViewData["Title"]</h3>
                     <form  class="" id="account" method="post">
-                        <h6 class="mt-2">Introdu adresa de email si parola.</h6>
+                        @*<h6 class="mt-2">Introdu adresa de email si parola.</h6>*@
                         <hr />
                         <div asp-validation-summary="All" class="text-danger"></div>
                         <div class="form-group">
-                            <label asp-for="Input.Email"></label>
+                            <label asp-for="Input.Email">Email</label>
                             <input asp-for="Input.Email" class="form-control" />
                             <span asp-validation-for="Input.Email" class="text-danger"></span>
                         </div>
                         <div class="form-group">
-                            <label asp-for="Input.Password"></label>
+                            <label asp-for="Input.Password">Parola</label>
                             <input asp-for="Input.Password" class="form-control" />
                             <span asp-validation-for="Input.Password" class="text-danger"></span>
                         </div>
                         <div class="form-group">
                             <div class="checkbox">
                                 <label asp-for="Input.RememberMe">
-                                    <input asp-for="Input.RememberMe" />
-                                    @Html.DisplayNameFor(m => m.Input.RememberMe)
+                                    <input asp-for="Input.RememberMe" /> Tine-ma minte
+                                    @*@Html.DisplayNameFor(m => m.Input.RememberMe)*@
                                 </label>
                             </div>
                         </div>

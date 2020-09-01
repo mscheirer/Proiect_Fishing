@@ -35,8 +35,7 @@
             <div class="container">
                 <a class="navbar-brand" asp-area="Customer" asp-controller="Home" asp-action="Index">
                     <img src="~/images/fish_mic15.png" />
-                        @*<img src="~/images/spicy.png" />
-                        <img src="~/images/verySpicy.png" />*@
+                        
                     <label class="text-info" style="cursor:pointer">FISHING - Rezervare</label>
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -69,7 +68,7 @@
                         {
                             <li class="nav-item">
                                 <a asp-area="Customer" asp-controller="Order" asp-action="OrderHistory" class="nav-link">
-                                    Istoric
+                                    Istoric Comenzi
                                 </a>
                             </li>
                         }
@@ -98,14 +97,14 @@
                         @if (HttpContextAccessor.HttpContext.Session.GetInt32(@SD.ssShoppingCartCount) != null)
                         {
                             <li style="color:white">
-                               <a href="#" class="nav-link">
+                               @*<a href="#" class="nav-link">*@
                                 <a asp-area="Customer" asp-controller="Cart" asp-action="Index" class="nav-link">
                                     @{
                                         var count = HttpContextAccessor.HttpContext.Session.GetInt32(@SD.ssShoppingCartCount);
                                     }
                                     <i class="fas fa-shopping-cart"></i> &nbsp; (@count)
                                 </a>
-                                  
+                                 
                             </li>
                         }
                         else
