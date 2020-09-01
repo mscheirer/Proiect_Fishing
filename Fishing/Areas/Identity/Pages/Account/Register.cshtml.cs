@@ -62,7 +62,6 @@ namespace Fishing.Areas.Identity.Pages.Account
 
             [Required]
             public string Name { get; set; }
-
             public string StreetAddress { get; set; }
             public string PhoneNumber { get; set; }
             public  string City { get; set; }
@@ -79,7 +78,7 @@ namespace Fishing.Areas.Identity.Pages.Account
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
             string role = Request.Form["rdUserRole"].ToString();
-
+            
 
             returnUrl = returnUrl ?? Url.Content("~/");
             if (ModelState.IsValid)
@@ -94,7 +93,9 @@ namespace Fishing.Areas.Identity.Pages.Account
                     PostalCode=Input.PostalCode,
                     PhoneNumber=Input.PhoneNumber
                 };
+                
                 var result = await _userManager.CreateAsync(user, Input.Password);
+                
                 if (result.Succeeded)
                 {
                    
@@ -123,12 +124,12 @@ namespace Fishing.Areas.Identity.Pages.Account
                         }
                     }
 
-                    return RedirectToAction("Index", "User", new { area = "Admin" });
+                    return RedirectToAction("Index", "User", new { area = "Admin" } );
 
-                    _logger.LogInformation("User created a new account with password.");
+              //      _logger.LogInformation("User created a new account with password.");
 
-                    //var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-                    //var callbackUrl = Url.Page(
+                    //    var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                    //    var callbackUrl = Url.Page(
                     //    "/Account/ConfirmEmail",
                     //    pageHandler: null,
                     //    values: new { userId = user.Id, code = code },
