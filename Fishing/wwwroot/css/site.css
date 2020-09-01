@@ -84,7 +84,8 @@ body {
     /*background: url('/images/banner-img2.jpg');*/
     /*background-color: #f9fcff;
     background-image: linear-gradient(147deg, #f9fcff 0%, #dee4ea 74%);*/
-    background-image: linear-gradient(to right top, #fbf8fa, #efedef, #e3e1e4, #d8d6d9, #cccbce, #bfc0c5, #b1b5bc, #a2aab2, #8c9da7, #769099, #60848a, #4b7878);
+    /*background-image: linear-gradient(to right top, #fbf8fa, #efedef, #e3e1e4, #d8d6d9, #cccbce, #bfc0c5, #b1b5bc, #a2aab2, #8c9da7, #769099, #60848a, #4b7878);*/
+    background-image: linear-gradient(to bottom, #3e4876, #346190, #257aa4, #1a94b3, #2cadbd, #4cb8bf, #65c3c2, #7ccdc6, #90cdc8, #a2cdc9, #b3cdcb, #c3cdcc);
 }
 
 
