@@ -158,8 +158,8 @@ namespace Fishing.Areas.Customer.Controllers
             await _db.SaveChangesAsync();
 
             //Email logic to notify user that order is ready for pickup
-       //     await _emailSender.SendEmailAsync(_db.Users.Where(u => u.Id == orderHeader.UserId).FirstOrDefault().Email, "Spice - Order Ready for Pickup " + orderHeader.Id.ToString(), "Order is ready for pickup.");
-
+            
+            await _emailSender.SendEmailAsync(_db.Users.Where(u => u.Id == orderHeader.UserId).FirstOrDefault().Email, "Fishing - Rezervarea Pregatita " + orderHeader.Id.ToString(), "Comanda a fost Pregatita cu succes");
 
             return RedirectToAction("ManageOrder", "Order");
         }
@@ -171,8 +171,7 @@ namespace Fishing.Areas.Customer.Controllers
             OrderHeader orderHeader = await _db.OrderHeader.FindAsync(OrderId);
             orderHeader.Status = SD.StatusCancelled;
             await _db.SaveChangesAsync();
-      //      await _emailSender.SendEmailAsync(_db.Users.Where(u => u.Id == orderHeader.UserId).FirstOrDefault().Email, "Spice - Order Cancelled " + orderHeader.Id.ToString(), "Order has been cancelled successfully.");
-
+            await _emailSender.SendEmailAsync(_db.Users.Where(u => u.Id == orderHeader.UserId).FirstOrDefault().Email, "Fishing - Rezervarea Anulata " + orderHeader.Id.ToString(), "Comanda a fost anulata cu succes");
             return RedirectToAction("ManageOrder", "Order");
         }
 
@@ -287,8 +286,9 @@ namespace Fishing.Areas.Customer.Controllers
             OrderHeader orderHeader = await _db.OrderHeader.FindAsync(orderId);
             orderHeader.Status = SD.StatusCompleted;
             await _db.SaveChangesAsync();
-            //       await _emailSender.SendEmailAsync(_db.Users.Where(u => u.Id == orderHeader.UserId).FirstOrDefault().Email, "Spice - Order Completed " + orderHeader.Id.ToString(), "Order has been completed successfully.");
-
+            
+            //Email sender 
+            await _emailSender.SendEmailAsync(_db.Users.Where(u => u.Id == orderHeader.UserId).FirstOrDefault().Email, "Fishing - Rezervarea Finalizata " + orderHeader.Id.ToString(), "Comanda a fost finalizata cu succes.");
             return RedirectToAction("OrderPickup", "Order");
         }
     }

@@ -14,6 +14,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Fishing.Utility;
 using Stripe;
+using Fishing.Service;
+using Microsoft.AspNetCore.Identity.UI.Services;
 
 namespace Fishing
 {
@@ -39,6 +41,9 @@ namespace Fishing
 
             services.Configure<StripeSettings>(Configuration.GetSection("Stripe"));
 
+            services.AddSingleton<IEmailSender, EmailSender>();
+            services.Configure<EmailOptions>(Configuration);
+            
 
             //   services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 

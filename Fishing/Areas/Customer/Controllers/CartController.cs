@@ -25,7 +25,7 @@ namespace Fishing.Areas.Customer.Controllers
         [BindProperty]
         public OrderDetailsCart detailCart { get; set; }
 
-        public CartController(ApplicationDbContext db,IEmailSender emailSender)
+        public CartController(ApplicationDbContext db, IEmailSender emailSender)
         {
             _db = db;
             _emailSender = emailSender;
@@ -122,7 +122,7 @@ namespace Fishing.Areas.Customer.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [ActionName("Summary")]
-        public async Task<IActionResult> SummaryPost(string stripeToken)
+        public async Task<IActionResult> SummaryPost(string stripeEmail, string stripeToken)
         {
             var claimsIdentity = (ClaimsIdentity)User.Identity;
             var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
@@ -198,6 +198,10 @@ namespace Fishing.Areas.Customer.Controllers
 
             if (charge.Status.ToLower() == "succeeded")
             {
+                // email pentru o comanda cu SUCCES
+
+                await _emailSender.SendEmailAsync(_db.Users.Where(u => u.Id == claim.Value).FirstOrDefault().Email, "Fishing - Rezervarea Creata " + detailCart.OrderHeader.Id.ToString(), "Comanda a fost transmisa cu succes"); 
+                
                 detailCart.OrderHeader.PaymentStatus = SD.PaymentStatusApproved;
                 detailCart.OrderHeader.Status = SD.StatusSubmitted;
             }
