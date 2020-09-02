@@ -80,9 +80,10 @@ namespace Fishing
 
            
             StripeConfiguration.SetApiKey(Configuration.GetSection("Stripe")["SecretKey"]);
-            
 
-
+            app.UseHttpsRedirection();
+            app.UseStaticFiles();
+            app.UseCookiePolicy();
             app.UseSession();
             app.UseAuthentication();
             app.UseAuthorization();
