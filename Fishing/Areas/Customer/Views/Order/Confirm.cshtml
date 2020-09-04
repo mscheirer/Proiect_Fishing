@@ -8,25 +8,25 @@
 <div class="backgroundWhite">
     <div class="row px-3">
         <div class="col-8">
-            <h2 class="text-info">Order Confirmed</h2>
+            <h2 class="text-info">Comanda confirmata</h2>
         </div>
         <div class="col-4 text-right">
-            <a asp-action="Index" asp-controller="Home" class="btn btn-success form-control">New Order</a>
+            <a asp-action="Index" asp-controller="Home" class="btn btn-success form-control">Comanda noua</a>
         </div>
     </div>
 
     @if(Model.OrderHeader !=null)
     {
         <div style="color:maroon" class="p-3">
-            Your order has been confirmed! Please see the order summary below. 
+            Comanda a fost confirmata ! Vezi detaliile comenzii mai jos. 
             <br />
-            Feel free to contact us if you have any questions.
+            Daca aveti intrebari, nu ezitati sa ne contactati.
         </div>
         <partial name="_IndividualOrderDetails" model="Model" />
     }
     else
     {
-        <div class="text-danger">Error... Please try again.</div>
+        <div class="text-danger">Eroare... Mai incearca.</div>
     }
 </div>
 
